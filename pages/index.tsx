@@ -14,7 +14,7 @@ export default function Home() {
   const [listKitsu, setListKitsu] = useState([])
   const [listAniList, setListAniList] = useState([])
   const [listMAL, setListMAL] = useState([])
-  const [title, setTitle] = useState('naruto')
+  const [title, setTitle] = useState('')
   const [type, setType] = useState('anime')
   const [error, setError] = useState(false)
   const [errorAniList, setErrorAniList] = useState(false)
