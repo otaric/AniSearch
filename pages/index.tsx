@@ -2,21 +2,22 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { request } from 'graphql-request'
 import { Kitsu } from '../utils/kitsu/kitsu'
-import { AniList } from '../utils/anilist/anilist'
+import { AniList, endpoint } from '../utils/anilist/anilist'
 import { MAL } from '../utils/mal/mal'
 import AniListSection from '../components/sections/AniListSection'
 import KitsuSection from '../components/sections/KitsuSection'
 import MALSection from '../components/sections/MALSection'
-import { FiSearch } from 'react-icons/fi'
-import classNames from 'classnames'
+import Form from '../components/Form'
 
 export default function Home() {
+  const [title, setTitle] = useState('')
+  const [type, setType] = useState('anime')
+  const [nsfw, setNsfw] = useState(false)
+
   const [listKitsu, setListKitsu] = useState([])
   const [listAniList, setListAniList] = useState([])
   const [listMAL, setListMAL] = useState([])
-  const [title, setTitle] = useState('')
-  const [type, setType] = useState('anime')
-  const [error, setError] = useState(false)
+  
   const [errorAniList, setErrorAniList] = useState(false)
   const [errorMAL, setErrorMAL] = useState(false)
   const [errorKitsu, setErrorKitsu] = useState(false)
@@ -24,8 +25,13 @@ export default function Home() {
   async function searchKitsu() {
     setListKitsu([])
     setErrorKitsu(false)
-    let url = `${type}?filter[text]=${title}&page[limit]=6`
-    Kitsu.get(url)
+    let url = `${type}?`
+    Kitsu.get(url, {
+      params: {
+        'filter[text]': title,
+        '[page[limit]]': 6
+      }
+    })
       .then(data => {
         if (data.data.data.length === 0) {
           setErrorKitsu(true)
@@ -41,8 +47,14 @@ export default function Home() {
   async function searchMALAxios() {
     setListMAL([])
     setErrorMAL(false)
-    let url = `${type}?q=${title}&limit=6`
-    MAL.get(url)
+    let url = `${type}`
+    MAL.get(url, {
+      params: {
+        q: title,
+        limit: 6,
+        ...(!nsfw ? { sfw: true } : {})
+      }
+    })
       .then(data => {
         if (data.data.data.length === 0) {
           setErrorMAL(true)
@@ -56,12 +68,12 @@ export default function Home() {
   }
 
   async function searchAnilist() {
-    const endpoint = `https://graphql.anilist.co`
     const variables = {
       type: type.toUpperCase(),
       search: title,
       page: 1,
-      perPage: 6
+      perPage: 6,
+      ...(nsfw ? {} : { isAdult: false })
     }
     setListAniList([])
     setErrorAniList(false)
@@ -78,6 +90,12 @@ export default function Home() {
       })
   }
 
+  async function search() {
+    await searchKitsu()
+    await searchAnilist()
+    await searchMALAxios()
+  }
+
   return (
     <>
       <Head>
@@ -91,69 +109,15 @@ export default function Home() {
       </div>
 
       <div className="flex justify-center container mx-auto text-neutral-50 px-4">
-        <form
-          className="flex relative py-5"
-          onSubmit={e => {
-            e.preventDefault()
-            setError(false)
-            if (title === '') {
-              setError(true)
-              return
-            }
-            searchKitsu()
-            searchAnilist()
-            searchMALAxios()
-          }}
-        >
-          <input
-            className="w-72 text-left px-4 h-12 bg-neutral-50 border-2 focus:outline-none rounded-l-lg text-neutral-700 font-semibold caret-rose-700"
-            type="search"
-            value={title}
-            onChange={e => {
-              setTitle(e.target.value)
-            }}
-          />
-          <span
-            className={classNames({
-              'absolute -top-1': true,
-              hidden: !error,
-              block: error
-            })}
-          >
-            type something in the search field!
-          </span>
-
-          <div className="space-x-2 absolute -bottom-2 accent-rose-700">
-            <label>
-              <input
-                type="radio"
-                value="anime"
-                checked={type === 'anime'}
-                onChange={e => {
-                  setType(e.target.value)
-                }}
-              />
-              <span className="pl-1">anime</span>
-            </label>
-            <label>
-              <input
-                type="radio"
-                value="manga"
-                checked={type === 'manga'}
-                onChange={e => {
-                  setType(e.target.value)
-                }}
-              />
-              <span className="pl-1">manga</span>
-            </label>
-          </div>
-          <button className="flex items-center rounded-r-lg bg-rose-700 px-5 text-neutral-50 font-semibold">
-            <span className="hidden lg:block">search</span>
-            <span>
-              <FiSearch className="text-2xl stroke-[3] lg:hidden" />
-            </span>
-          </button>
-        </form>
+        <Form
+          title={title}
+          setTitle={setTitle}
+          type={type}
+          setType={setType}
+          nsfw={nsfw}
+          setNsfw={setNsfw}
+          search={search}
+        />
       </div>
 
       <div className="container mx-auto py-10 space-y-10 text-neutral-50 px-4">

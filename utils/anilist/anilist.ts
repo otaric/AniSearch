@@ -1,12 +1,15 @@
 import { gql } from 'graphql-request'
 
+
+export const endpoint = `https://graphql.anilist.co`
+
 export const AniList = gql`
   query (
-    $id: Int
     $page: Int
     $perPage: Int
     $search: String
     $type: MediaType
+    $isAdult: Boolean
   ) {
     Page(page: $page, perPage: $perPage) {
       pageInfo {
@@ -16,9 +19,10 @@ export const AniList = gql`
         hasNextPage
         perPage
       }
-      media(id: $id, search: $search, type: $type) {
+      media(search: $search, type: $type, isAdult: $isAdult) {
         id
         type
+        isAdult
         title {
           romaji
           english
