@@ -26,7 +26,7 @@ export default function Card({ title, image, link, date }: Props) {
           <p>{date}</p>
 
           <div className="w-min cursor-pointer absolute -bottom-20 right-2">
-            <a href={link} target="_blank" rel="noreferrer">
+            <a href={link} target="_blank" rel="noreferrer noopener">
               <FiExternalLink className="text-2xl sm:text-xl lg:text-lg" />
             </a>
           </div>
