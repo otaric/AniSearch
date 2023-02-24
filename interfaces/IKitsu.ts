@@ -14,6 +14,5 @@ export default interface IKitsu {
       medium: string;
       original: string;
     };
-    startDate: string;
   };
 }

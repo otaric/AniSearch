@@ -9,22 +9,4 @@ export default interface IMAL {
   };
   title: string;
   title_english: string;
-  aired: {
-    prop: {
-      from: {
-        day: number;
-        month: number;
-        year: number;
-      };
-    };
-  };
-  published: {
-    prop: {
-      from: {
-        day: number;
-        month: number;
-        year: number;
-      };
-    };
-  };
 }

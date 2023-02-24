@@ -10,9 +10,4 @@ export default interface IAniList {
     large: string;
     medium: string;
   };
-  startDate: {
-    day: number | undefined;
-    month: number | undefined;
-    year: number | undefined;
-  };
 }

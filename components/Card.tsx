@@ -14,12 +14,12 @@ export default function Card({ title, image, link }: Props) {
       rel="noreferrer noopener"
       className="group flex flex-col"
     >
-      <div className=" overflow-hidden text-neutral-50">
-        <div className="aspect-w-3 aspect-h-4 min-h-[265px] min-w-[185px]">
+      <div className="overflow-hidden text-neutral-50">
+        <div className="h-[265px] min-w-[185px]">
           <img
-            className="h-full w-full rounded-lg object-cover object-center"
+            className="h-full w-full rounded-lg object-cover object-center "
             src={image}
-            alt={`Poster Image of ${title}`}
+            alt={`Cover Image of ${title}`}
           />
         </div>
       </div>
