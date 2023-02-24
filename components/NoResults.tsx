@@ -3,5 +3,5 @@ export default function NoResults() {
     <div className="w-ful text-center">
       <p>No Results!</p>
     </div>
-  )
+  );
 }

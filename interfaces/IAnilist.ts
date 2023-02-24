@@ -1,18 +1,18 @@
 export default interface IAniList {
-  id: string
+  id: string;
   title: {
-    romaji: string
-    english: string | null
-    native: string
-  }
+    romaji: string;
+    english: string | null;
+    native: string;
+  };
   coverImage: {
-    extraLarge: string
-    large: string
-    medium: string
-  }
+    extraLarge: string;
+    large: string;
+    medium: string;
+  };
   startDate: {
-    day: number | undefined
-    month: number | undefined
-    year: number | undefined
-  }
+    day: number | undefined;
+    month: number | undefined;
+    year: number | undefined;
+  };
 }

@@ -1,25 +1,21 @@
-import IKitsu from '../../interfaces/IKitsu'
-import Card from '../Card'
-import NoResults from '../NoResults'
+import IKitsu from "../../interfaces/IKitsu";
+import Card from "../Card";
 
 interface Props {
-  type: string
-  listKitsu: never[]
-  error: boolean
+  type: string;
+  listKitsu: never[];
 }
 
-export default function KitsuSection({ listKitsu, type, error }: Props) {
+export default function KitsuSection({ listKitsu, type }: Props) {
   return (
-    <div className="flex flex-col max-w-fit m-auto">
-      <h2 className="pb-5 font-bold text-3xl text-center 2xl:text-left">
+    <div className="m-auto flex max-w-fit flex-col">
+      <h2 className="pb-5 text-center text-3xl font-bold 2xl:text-left">
         KITSU
       </h2>
 
-      {error && <NoResults />}
-
       <div className="flex flex-wrap items-center justify-center gap-5">
         {listKitsu.map((item: IKitsu) => {
-          const date = item.attributes.startDate
+          const date = item.attributes.startDate;
           return (
             <Card
               link={`https://kitsu.io/${type}/${item.id}`}
@@ -28,9 +24,9 @@ export default function KitsuSection({ listKitsu, type, error }: Props) {
               title={item.attributes.canonicalTitle}
               date={date}
             />
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }

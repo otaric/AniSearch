@@ -1,29 +1,25 @@
-import IAniList from '../../interfaces/IAnilist'
-import Card from '../Card'
-import NoResults from '../NoResults'
+import IAniList from "../../interfaces/IAnilist";
+import Card from "../Card";
 
 interface Props {
-  type: string
-  listAniList: never[]
-  error: boolean
+  type: string;
+  listAniList: never[];
 }
 
-export default function AniListSection({ listAniList, type, error }: Props) {
+export default function AniListSection({ listAniList, type }: Props) {
   return (
-    <div className="flex flex-col max-w-fit m-auto">
-      <h2 className=" pb-5 font-bold text-3xl text-center 2xl:text-left">
+    <div className="m-auto flex max-w-fit flex-col">
+      <h2 className=" pb-5 text-center text-3xl font-bold 2xl:text-left">
         ANILIST
       </h2>
 
-      {error && <NoResults />}
-
       <div className="flex flex-wrap items-center justify-center gap-5">
         {listAniList.map((item: IAniList) => {
-          const day = item.startDate.day ? `-${item.startDate.day}` : ''
-          const month = item.startDate.month ? `-${item.startDate.month}` : ''
-          const year = `${item.startDate.year}`
+          const day = item.startDate.day ? `-${item.startDate.day}` : "";
+          const month = item.startDate.month ? `-${item.startDate.month}` : "";
+          const year = `${item.startDate.year}`;
 
-          const date = year + month + day
+          const date = year + month + day;
 
           return (
             <Card
@@ -33,9 +29,9 @@ export default function AniListSection({ listAniList, type, error }: Props) {
               title={item.title.romaji}
               date={date}
             />
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }

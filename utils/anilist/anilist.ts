@@ -1,7 +1,6 @@
-import { gql } from 'graphql-request'
+import { gql } from "graphql-request";
 
-
-export const endpoint = `https://graphql.anilist.co`
+export const endpoint = `https://graphql.anilist.co`;
 
 export const AniList = gql`
   query (
@@ -41,4 +40,4 @@ export const AniList = gql`
       }
     }
   }
-`
+`;

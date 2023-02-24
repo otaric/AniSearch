@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance } from "axios";
 
 export const Kitsu: AxiosInstance = axios.create({
-  baseURL: 'https://kitsu.io/api/edge/'
-})
+  baseURL: "https://kitsu.io/api/edge/",
+});
