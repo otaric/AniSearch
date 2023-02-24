@@ -19,13 +19,10 @@ export default function Home() {
   const [listAniList, setListAniList] = useState([]);
   const [listMAL, setListMAL] = useState([]);
 
-  const [errorAniList, setErrorAniList] = useState(false);
-  const [errorMAL, setErrorMAL] = useState(false);
-  const [errorKitsu, setErrorKitsu] = useState(false);
+  const [init, setInit] = useState(true);
 
   async function searchKitsu() {
     setListKitsu([]);
-    setErrorKitsu(false);
     let url = `${type}?`;
     Kitsu.get(url, {
       params: {
@@ -38,13 +35,11 @@ export default function Home() {
       })
       .catch((error) => {
         console.log(error);
-        setErrorKitsu(true);
       });
   }
 
   async function searchMALAxios() {
     setListMAL([]);
-    setErrorMAL(false);
     let url = `${type}`;
     MAL.get(url, {
       params: {
@@ -58,7 +53,6 @@ export default function Home() {
       })
       .catch((error) => {
         console.log(error);
-        setErrorMAL(true);
       });
   }
 
@@ -71,14 +65,12 @@ export default function Home() {
       ...(nsfw ? {} : { isAdult: false }),
     };
     setListAniList([]);
-    setErrorAniList(false);
     await request(endpoint, AniList, variables)
       .then((data) => {
         setListAniList(data.Page.media);
       })
       .catch((error) => {
         console.log(error);
-        setErrorAniList(true);
       });
   }
 
@@ -86,6 +78,7 @@ export default function Home() {
     await searchKitsu();
     await searchAnilist();
     await searchMALAxios();
+    setInit(false);
   }
 
   return (
@@ -113,21 +106,22 @@ export default function Home() {
       </div>
 
       <div className="container mx-auto space-y-10 py-10 px-4 text-neutral-50">
-        {listAniList.length === 0 || errorAniList ? null : (
+        {listAniList.length === 0 ? null : (
           <AniListSection type={type} listAniList={listAniList} />
         )}
 
-        {listMAL.length === 0 || errorMAL ? null : (
+        {listMAL.length === 0 ? null : (
           <MALSection type={type} listMAL={listMAL} />
         )}
 
-        {listKitsu.length === 0 || errorKitsu ? null : (
+        {listKitsu.length === 0 ? null : (
           <KitsuSection type={type} listKitsu={listKitsu} />
         )}
 
         {listAniList.length === 0 &&
           listKitsu.length === 0 &&
-          listMAL.length === 0 && <NoResults />}
+          listMAL.length === 0 &&
+          !init && <NoResults />}
       </div>
     </>
   );
