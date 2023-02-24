@@ -1,36 +1,32 @@
-import { FiExternalLink } from "react-icons/fi";
+/* eslint-disable @next/next/no-img-element */
 
 interface Props {
   link: string;
   title: string;
   image: string;
-  date: string | number;
 }
 
-export default function Card({ title, image, link, date }: Props) {
+export default function Card({ title, image, link }: Props) {
   return (
-    <div className="relative overflow-hidden rounded-lg bg-rose-700 text-neutral-50">
-      <div className="flex w-80 gap-2 sm:w-60 min-[1535px]:w-52">
-        <img
-          className="h-36 w-[105px] object-cover object-center"
-          src={image}
-          alt={`Poster Image of ${title}`}
-        />
-        <div className="h-full w-52 sm:w-28 min-[1535px]:w-24">
-          <p
-            className="w-full overflow-hidden text-ellipsis whitespace-nowrap font-medium"
-            title={title}
-          >
-            {title}
-          </p>
-          <p>{date}</p>
+    <a
+      href={link}
+      target="_blank"
+      rel="noreferrer noopener"
+      className="group flex flex-col"
+    >
+      <div className=" overflow-hidden text-neutral-50">
+        <div className="aspect-w-3 aspect-h-4 min-h-[265px] min-w-[185px]">
+          <img
+            className="h-full w-full rounded-lg object-cover object-center"
+            src={image}
+            alt={`Poster Image of ${title}`}
+          />
         </div>
       </div>
-      <div className="absolute bottom-2 right-2 w-min cursor-pointer">
-        <a href={link} target="_blank" rel="noreferrer noopener">
-          <FiExternalLink className="text-2xl sm:text-xl lg:text-lg" />
-        </a>
-      </div>
-    </div>
+
+      <p className="w-full max-w-[192px] overflow-hidden text-ellipsis font-medium transition-all line-clamp-2 group-hover:text-rose-700">
+        {title}
+      </p>
+    </a>
   );
 }

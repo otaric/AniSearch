@@ -13,16 +13,14 @@ export default function KitsuSection({ listKitsu, type }: Props) {
         KITSU
       </h2>
 
-      <div className="flex flex-wrap items-center justify-center gap-5">
+      <div className="flex flex-wrap justify-center gap-5">
         {listKitsu.map((item: IKitsu) => {
-          const date = item.attributes.startDate;
           return (
             <Card
               link={`https://kitsu.io/${type}/${item.id}`}
               key={item.id}
               image={item.attributes.posterImage.medium}
               title={item.attributes.canonicalTitle}
-              date={date}
             />
           );
         })}

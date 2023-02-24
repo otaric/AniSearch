@@ -13,21 +13,14 @@ export default function AniListSection({ listAniList, type }: Props) {
         ANILIST
       </h2>
 
-      <div className="flex flex-wrap items-center justify-center gap-5">
+      <div className="flex flex-wrap justify-center gap-5">
         {listAniList.map((item: IAniList) => {
-          const day = item.startDate.day ? `-${item.startDate.day}` : "";
-          const month = item.startDate.month ? `-${item.startDate.month}` : "";
-          const year = `${item.startDate.year}`;
-
-          const date = year + month + day;
-
           return (
             <Card
               link={`https://anilist.co/${type}/${item.id}/`}
               key={item.id}
               image={item.coverImage.large}
               title={item.title.romaji}
-              date={date}
             />
           );
         })}
